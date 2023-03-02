@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "1095541565902",
+    "project_id": "kudrati-kahumbo",
+    "storage_bucket": "kudrati-kahumbo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095541565902:android:de31b2f132191f8351a39f",
+        "android_client_info": {
+          "package_name": "com.example.kahumbo_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095541565902-o521e2p7fslo1gfutj140vt456363v7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClAl7G2JIMkk0m3ClPn5Y4tr2BJJSjo1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095541565902-o521e2p7fslo1gfutj140vt456363v7g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1095541565902-hhp66tbhku7pc61f8vk12i9ups5c2pd2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.kahumboAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095541565902:android:da1c27641ed9569351a39f",
+        "android_client_info": {
+          "package_name": "com.example.kudarati_kahumbo_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095541565902-o521e2p7fslo1gfutj140vt456363v7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClAl7G2JIMkk0m3ClPn5Y4tr2BJJSjo1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095541565902-o521e2p7fslo1gfutj140vt456363v7g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1095541565902-hhp66tbhku7pc61f8vk12i9ups5c2pd2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.kahumboAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095541565902:android:7863e26339c3125751a39f",
+        "android_client_info": {
+          "package_name": "com.example.kudrati_kahumbo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095541565902-2e8bn9es9k1fji0n73ork2vp653u07kr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kudrati_kahumbo",
+            "certificate_hash": "4919e6039c10b15bafc96003423a4a3859c26235"
+          }
+        },
+        {
+          "client_id": "1095541565902-o521e2p7fslo1gfutj140vt456363v7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClAl7G2JIMkk0m3ClPn5Y4tr2BJJSjo1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095541565902-o521e2p7fslo1gfutj140vt456363v7g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1095541565902-hhp66tbhku7pc61f8vk12i9ups5c2pd2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.kahumboAdmin"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

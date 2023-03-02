@@ -1,0 +1,99 @@
+showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: Row(
+                                                  children: const[
+                                                     Icon(Icons.edit,size: 20,color: Colors.green,),
+                                                     Text(" Edit Popular Product ",style: TextStyle(color: Colors.green),),
+                                                  ],
+                                                ),
+                                                content: SizedBox(
+                                                  height: 150,
+                                                  child: Form(
+                                                    key: _key,
+                                                    child: Column(
+                                                      children: [
+                                                        TextFormField(
+                                                          textInputAction: TextInputAction.next,
+                                                          autofocus: false,
+                                                          validator: (value) {
+                                                            if(_editpop.text.isEmpty){
+                                                              return "Please Enter Popular Product Name";
+                                                            }
+                                                            return null;
+                                                          },
+                                                          controller: _editpop,
+                                                          decoration: const InputDecoration(
+                                                              hintText: "Enter Popular Product Name"
+                                                          ),
+                                                        ),
+                                                        TextFormField(
+                                                          textInputAction: TextInputAction.next,
+                                                          keyboardType:TextInputType.number,
+                                                          autofocus: false,
+                                                          validator: (value) {
+                                                            if(_poprice.text.isEmpty){
+                                                              return "Please Enter Popular Product Price";
+                                                            }
+                                                            return null;
+                                                          },
+                                                          controller: _poprice,
+                                                          decoration: const InputDecoration(
+                                                              hintText: "Enter Popular Product Price",
+
+                                                          ),
+                                                        ),
+                                                        TextFormField(
+                                                          textInputAction: TextInputAction.done,
+                                                          autofocus: false,
+                                                          controller: _imageConntroller,
+                                                          decoration: const InputDecoration(
+                                                              hintText: "Enter Image Path"
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.cancel,
+                                                      color: Colors.red,
+                                                      size: 30,
+                                                    ),
+                                                  ),
+                                                  IconButton(
+                                                    icon: const Icon(
+                                                      Icons.done,
+                                                      color: Colors.green,
+                                                      size: 30,
+                                                    ),
+                                                    onPressed:() async {
+                                                      if(_key.currentState!.validate()){
+                                                        FirebaseFirestore.instance
+                                                        .collection("popular")
+                                                        .doc(widget.id)
+                                                        .update({
+                                                         'pname':_editpop.text,
+                                                         'price':int.parse(_poprice.text),
+                                                         'image':_imageConntroller.text,
+                                                        }).whenComplete(() {
+                                                         Navigator.of(context).pop();
+                                                         Fluttertoast.showToast(msg: "Popular Product Update..");
+                                                        });
+                                                      }
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            });
+
+
+
+                                            
