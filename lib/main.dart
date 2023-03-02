@@ -5,7 +5,6 @@ import 'package:kahumbo_admin/Routs/screen_routs.dart';
 import 'package:kahumbo_admin/Screens/splash_screen.dart';
 import 'package:kahumbo_admin/firebase_options.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
-      onGenerateRoute: (RouteSettings settings) => 
+      onGenerateRoute: (RouteSettings settings) =>
           ScreenRoutes.generateRoute(settings),
     );
   }
