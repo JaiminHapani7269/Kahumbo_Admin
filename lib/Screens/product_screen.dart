@@ -1,9 +1,8 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kahumbo_admin/Constants/dimentions.dart';
+import 'dart:math';
 
 import '../Constants/app_colors.dart';
 import '../Widgets/single_product.dart';
@@ -31,15 +30,16 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
   final TextEditingController _createProductPrice = TextEditingController();
 
   final _key = GlobalKey<FormState>();
+  var random = Random();
 
-  String productid = '' ;
+  String productid = '';
 
-  clearTextBox(){
+  clearTextBox() {
     _createProductName.text = '';
     _createProductPrice.text = '';
   }
 
-  void dispose(){
+  void dispose() {
     super.dispose();
     _createProductName.dispose();
     _createProductPrice.dispose();
@@ -47,6 +47,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String rPID = 'RodUcT${random.nextInt(900000) + 100000}';
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -60,103 +61,112 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              decoration:const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white
-              ),
-              child: IconButton(onPressed:(){
-                showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title:  Row(
-                        children:const [
-                          Icon(Icons.add,size: 20,color: Colors.green,),
-                          Text(" Create Product ",style: TextStyle(color: Colors.green),),
-                        ],
-                      ),
-                      content: SizedBox(
-                        height: 100,
-                        child: Form(
-                          key: _key,
-                          child: Column(
-                            children: [
-                              TextFormField(
-                                controller: _createProductName,
-                                textInputAction: TextInputAction.next,
-                                validator: ((value) {
-                                  if(_createProductName.text.isEmpty){
-                                    return "please enter product name";
-                                  }
-                                  return null;
-                                }),
-                                autofocus: false,
-                                decoration: const InputDecoration(
-                                  hintText: "Enter Product Name"
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.white),
+              child: IconButton(
+                  onPressed: () {
+                    showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Row(
+                              children: const [
+                                Icon(
+                                  Icons.add,
+                                  size: 20,
+                                  color: Colors.green,
+                                ),
+                                Text(
+                                  " Create Product ",
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                              ],
+                            ),
+                            content: SizedBox(
+                              height: 100,
+                              child: Form(
+                                key: _key,
+                                child: Column(
+                                  children: [
+                                    TextFormField(
+                                      controller: _createProductName,
+                                      textInputAction: TextInputAction.next,
+                                      validator: ((value) {
+                                        if (_createProductName.text.isEmpty) {
+                                          return "please enter product name";
+                                        }
+                                        return null;
+                                      }),
+                                      autofocus: false,
+                                      decoration: const InputDecoration(
+                                          hintText: "Enter Product Name"),
+                                    ),
+                                    TextFormField(
+                                      controller: _createProductPrice,
+                                      keyboardType: TextInputType.number,
+                                      textInputAction: TextInputAction.done,
+                                      autofocus: false,
+                                      validator: ((value) {
+                                        if (_createProductPrice.text.isEmpty) {
+                                          return "please enter price ";
+                                        }
+                                        return null;
+                                      }),
+                                      decoration: const InputDecoration(
+                                          hintText: "Enter Product Price"),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              TextFormField(
-                                controller: _createProductPrice,
-                                keyboardType: TextInputType.number,
-                                textInputAction: TextInputAction.done,
-                                autofocus: false,
-                                 validator: ((value) {
-                                  if(_createProductPrice.text.isEmpty){
-                                    return "please enter price ";
-                                  }
-                                  return null;
-                                }),
-                                decoration: const InputDecoration(
-                                  hintText: "Enter Product Price"
+                            ),
+                            actions: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(
+                                  Icons.cancel,
+                                  color: Colors.red,
+                                  size: 30,
                                 ),
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.done,
+                                  color: Colors.green,
+                                  size: 30,
+                                ),
+                                onPressed: () async {
+                                  if (_key.currentState!.validate()) {
+                                    await FirebaseFirestore.instance
+                                        .collection("category")
+                                        .doc(widget.id)
+                                        .collection("${widget.collection}")
+                                        .doc(rPID)
+                                        .set({
+                                      'cid': widget.cid,
+                                      'pid': rPID,
+                                      'pname': _createProductName.text,
+                                      'price':
+                                          int.parse(_createProductPrice.text),
+                                    }).whenComplete(() {
+                                      Navigator.of(context).pop();
+                                      Fluttertoast.showToast(
+                                          msg: "Product Added");
+                                      clearTextBox();
+                                    });
+                                  }
+                                },
                               ),
                             ],
-                          ),
-                        ),
-                      ),
-                      actions: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(
-                            Icons.cancel,
-                            color: Colors.red,
-                            size: 30,
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.done,
-                            color: Colors.green,
-                            size: 30,
-                          ),
-                          onPressed: ()  async {
-                              if(_key.currentState!.validate()) {
-                                await FirebaseFirestore.instance
-                                .collection("category")
-                                .doc(widget.id)
-                                .collection("${widget.collection}")
-                                .doc(productid)
-                                .set({
-                                  'cid':widget.cid,
-                                  'pid':productid,
-                                  'pname':_createProductName.text,
-                                  'price':int.parse(_createProductPrice.text),
-                                }).whenComplete(() {
-                                  Navigator.of(context).pop();
-                                  Fluttertoast.showToast(msg: "Product Added");
-                                  clearTextBox();
-                                });
-                              }
-                            },
-                        ),
-                      ],
-                    );
-                  });
-        },
-         icon:const Icon(Icons.add,color: AppColors.mainPurple,)),
+                          );
+                        });
+                  },
+                  icon: const Icon(
+                    Icons.add,
+                    color: AppColors.mainPurple,
+                  )),
             ),
           )
         ],
@@ -182,14 +192,14 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   var data = snapshot.data!.docs[index];
-                  productid = "pRoDUct${snapshot.data!.docs.length +1}";
+                  productid = "pRoDUct${snapshot.data!.docs.length + 1}";
                   return SingleProductTile(
                     id: data.id,
                     pid: data['pid'],
                     pname: data['pname'],
                     price: data['price'],
-                    cid:widget.id,
-                    collection:widget.collection,
+                    cid: widget.id,
+                    collection: widget.collection,
                   );
                 });
           },

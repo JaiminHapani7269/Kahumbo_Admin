@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, prefer_typing_uninitialized_variables
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -77,7 +79,6 @@ class _SingleProductTileState extends State<SingleProductTile> {
                         onTap: () async {
                           _productName.text = widget.pname;
                           _productPrice.text = widget.price.toString();
-
                           showDialog(
                               barrierDismissible: false,
                               context: context,
@@ -92,41 +93,55 @@ class _SingleProductTileState extends State<SingleProductTile> {
                                       ),
                                       Text(
                                         " Edit Product ",
-                                        style: TextStyle(
-                                            color: Colors.green,
-                                            fontWeight: FontWeight.bold),
+                                        style: TextStyle(color: Colors.green),
                                       ),
                                     ],
                                   ),
                                   content: SizedBox(
-                                    height: 100,
-                                    child: Column(
-                                      children: [
-                                        TextFormField(
-                                          textInputAction: TextInputAction.next,
-                                          autofocus: false,
-                                          validator: (value) {
-                                            if (_productName.text.isEmpty) {
-                                              return "Please Enter Category Name";
-                                            }
-                                            return null;
-                                          },
-                                          controller: _productName,
-                                          focusNode: _nameFocus,
-                                          decoration: const InputDecoration(
-                                              hintText: "Enter Category Name"),
-                                        ),
-                                        TextFormField(
-                                          textInputAction: TextInputAction.done,
-                                          autofocus: false,
-                                          controller: _productPrice,
-                                          focusNode: _priceFocus,
-                                          keyboardType: TextInputType.number,
-                                          decoration: const InputDecoration(
-                                              hintText: "Enter Product Price"),
-                                        ),
-                                      ],
-                                    ),
+                                    height: Dimensions.h100,
+                                    child: Form(
+                                        key: _key,
+                                        child: Column(
+                                          children: [
+                                            TextFormField(
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              onSaved: (value) {
+                                                _productName.text = value!;
+                                              },
+                                              validator: (value) {
+                                                if (_productName.text.isEmpty) {
+                                                  return "Please Enter Product Name";
+                                                }
+                                                return null;
+                                              },
+                                              controller: _productName,
+                                              decoration: const InputDecoration(
+                                                  hintText:
+                                                      "Enter Product Name"),
+                                            ),
+                                            TextFormField(
+                                              textInputAction:
+                                                  TextInputAction.done,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              controller: _productPrice,
+                                              focusNode: _priceFocus,
+                                              onSaved: (value) {
+                                                _productPrice.text = value!;
+                                              },
+                                              validator: (value) {
+                                                if (_productPrice
+                                                    .text.isEmpty) {
+                                                  return "Please Enter Product Price";
+                                                }
+                                                return null;
+                                              },
+                                              decoration: const InputDecoration(
+                                                  hintText: "Enter Icon Path"),
+                                            ),
+                                          ],
+                                        )),
                                   ),
                                   actions: [
                                     IconButton(
@@ -149,11 +164,10 @@ class _SingleProductTileState extends State<SingleProductTile> {
                                         if (_key.currentState!.validate()) {
                                           await FirebaseFirestore.instance
                                               .collection("category")
-                                              .doc(widget.id)
+                                              .doc(widget.cid)
                                               .collection(widget.collection)
                                               .doc(widget.pid)
                                               .update({
-                                            'cid': widget.cid,
                                             'pid': widget.pid,
                                             'pname': _productName.text,
                                             'price':

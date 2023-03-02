@@ -185,11 +185,12 @@ class _CategoryAdminState extends State<CategoryAdmin> {
                                         'pname': _newPnameConntroller.text,
                                         'price': int.parse(
                                             _newPriceConntroller.text),
+                                      }).whenComplete(() {
+                                        Navigator.of(context).pop();
+                                        clearTextBox();
+                                        Fluttertoast.showToast(
+                                            msg: "Category Added");
                                       });
-                                      Navigator.of(context).pop();
-                                      clearTextBox();
-                                      Fluttertoast.showToast(
-                                          msg: "Category Added");
                                     });
                                   }
                                 },
