@@ -70,7 +70,7 @@ class MyOrderPage extends StatelessWidget {
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Order Number : " + "${data['oid']}"),
+                            Text("Order Id: " + "${data['oid']}"),
                             Text(
                               "${data['cname']}",
                               style: const TextStyle(
@@ -80,11 +80,23 @@ class MyOrderPage extends StatelessWidget {
                           ],
                         ),
                         subtitle: Text("${data['date']}"),
-                        trailing: Text(
-                          "₹ ${data['total']}",
-                          style: TextStyle(
-                              color: AppColors.mainPurple,
-                              fontSize: Dimensions.h18),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "₹ ${data['total']}",
+                              style: TextStyle(
+                                  color: AppColors.mainPurple,
+                                  fontSize: Dimensions.h18),
+                            ),
+                            Text(
+                              "${data['orderStatus']}",
+                              style: TextStyle(
+                                  fontSize: Dimensions.h18,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.green),
+                            ),
+                          ],
                         ),
                       ),
                     ),

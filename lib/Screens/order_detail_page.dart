@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kahumbo_admin/Screens/order_screen.dart';
 import '../Constants/app_colors.dart';
 import '../Constants/dimentions.dart';
 import '../Model/user_model.dart';
@@ -309,7 +310,8 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                         iconSize: 40.0,
                         iconEnabledColor: AppColors.mainPurple,
                         style: const TextStyle(color: Colors.green),
-                        items: ['Placed', 'Delivered'].map(
+                        items:
+                            ['Placed', 'Prepared', 'Shipped', 'Delivered'].map(
                           (val) {
                             return DropdownMenuItem<String>(
                               value: val,
@@ -340,7 +342,11 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                       FirebaseFirestore.instance
                           .collection("order")
                           .doc(widget.oid)
-                          .update({'orderStatus': _dropDownValue});
+                          .update({'orderStatus': _dropDownValue}).whenComplete(
+                              () => Navigator.of(context)
+                                      .pushReplacement(MaterialPageRoute(
+                                    builder: (context) => MyOrderPage(),
+                                  )));
                     },
                     child: Text('Update')),
               ),
